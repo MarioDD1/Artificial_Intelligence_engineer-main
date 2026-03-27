@@ -1,0 +1,7 @@
+experiment_id,task,dataset,seed,model_summary,optimizer,lr,epochs_trained,best_val_accuracy,test_accuracy,precision,recall,mean_iou,notes
+C1,classification,CIFAR100,42,SimpleCNN base,Adam,0.001,2,0.01,,,,,Simple CNN without augmentations.
+C2,classification,CIFAR100,42,SimpleCNN aug,Adam,0.001,2,0.01,,,,,Simple CNN with light augmentations.
+C3,classification,CIFAR100,42,ResNet18 head-only,Adam,0.001,2,0.06,,,,,"Pretrained ResNet18, only fc is trainable."
+C4,classification,CIFAR100,42,ResNet18 layer4+fc,AdamW,0.0003,2,0.19,0.1533,,,,"Pretrained ResNet18, layer4 and fc are trainable."
+V1,segmentation,Pascal VOC 2012,42,DeepLabV3_ResNet50 pretrained,,,0,,,0.9557,0.7318,0.6899,foreground = person
+V2,segmentation,Pascal VOC 2012,42,DeepLabV3_ResNet50 pretrained,,,0,,,0.9447,0.7361,0.6829,foreground = person

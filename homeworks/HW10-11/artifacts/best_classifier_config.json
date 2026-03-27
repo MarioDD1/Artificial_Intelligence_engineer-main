@@ -1,0 +1,243 @@
+{
+  "task": "classification",
+  "selected_experiment": "C4",
+  "dataset": {
+    "name": "CIFAR100",
+    "source": "torchvision.datasets.CIFAR100",
+    "data_root": "data",
+    "num_classes": 100,
+    "class_names_preview": [
+      "apple",
+      "aquarium_fish",
+      "baby",
+      "bear",
+      "beaver",
+      "bed",
+      "bee",
+      "beetle",
+      "bicycle",
+      "bottle"
+    ]
+  },
+  "split": {
+    "strategy": "official train/test + reproducible random_split(train, 80/20)",
+    "seed": 42,
+    "train_size": 400,
+    "val_size": 100,
+    "test_size": 150,
+    "fast_mode_train_limit": 500,
+    "fast_mode_test_limit": 150
+  },
+  "model": {
+    "architecture": "ResNet18 layer4+fc",
+    "family": "ResNet18",
+    "pretrained": true,
+    "trainable_parts": "layer4 + fc"
+  },
+  "transforms": {
+    "base_transform": [
+      {
+        "name": "ToTensor",
+        "params": {}
+      },
+      {
+        "name": "Normalize",
+        "params": {
+          "training": true,
+          "mean": [
+            0.5071,
+            0.4867,
+            0.4408
+          ],
+          "std": [
+            0.2675,
+            0.2565,
+            0.2761
+          ],
+          "inplace": false
+        }
+      }
+    ],
+    "augmentation_transform": [
+      {
+        "name": "RandomCrop",
+        "params": {
+          "training": true,
+          "size": [
+            32,
+            32
+          ],
+          "padding": 4,
+          "pad_if_needed": false,
+          "fill": 0,
+          "padding_mode": "constant"
+        }
+      },
+      {
+        "name": "RandomHorizontalFlip",
+        "params": {
+          "training": true,
+          "p": 0.5
+        }
+      },
+      {
+        "name": "ColorJitter",
+        "params": {
+          "training": true,
+          "brightness": [
+            0.8,
+            1.2
+          ],
+          "contrast": [
+            0.8,
+            1.2
+          ],
+          "saturation": [
+            0.8,
+            1.2
+          ],
+          "hue": null
+        }
+      },
+      {
+        "name": "ToTensor",
+        "params": {}
+      },
+      {
+        "name": "Normalize",
+        "params": {
+          "training": true,
+          "mean": [
+            0.5071,
+            0.4867,
+            0.4408
+          ],
+          "std": [
+            0.2675,
+            0.2565,
+            0.2761
+          ],
+          "inplace": false
+        }
+      }
+    ],
+    "resnet_train_transform": [
+      {
+        "name": "Resize",
+        "params": {
+          "training": true,
+          "size": 256,
+          "max_size": null,
+          "antialias": true
+        }
+      },
+      {
+        "name": "RandomResizedCrop",
+        "params": {
+          "training": true,
+          "size": [
+            224,
+            224
+          ],
+          "antialias": true,
+          "scale": [
+            0.8,
+            1.0
+          ],
+          "ratio": [
+            0.75,
+            1.3333333333333333
+          ]
+        }
+      },
+      {
+        "name": "RandomHorizontalFlip",
+        "params": {
+          "training": true,
+          "p": 0.5
+        }
+      },
+      {
+        "name": "ToTensor",
+        "params": {}
+      },
+      {
+        "name": "Normalize",
+        "params": {
+          "training": true,
+          "mean": [
+            0.485,
+            0.456,
+            0.406
+          ],
+          "std": [
+            0.229,
+            0.224,
+            0.225
+          ],
+          "inplace": false
+        }
+      }
+    ],
+    "resnet_eval_transform": [
+      {
+        "name": "Resize",
+        "params": {
+          "training": true,
+          "size": 256,
+          "max_size": null,
+          "antialias": true
+        }
+      },
+      {
+        "name": "CenterCrop",
+        "params": {
+          "training": true,
+          "size": [
+            224,
+            224
+          ]
+        }
+      },
+      {
+        "name": "ToTensor",
+        "params": {}
+      },
+      {
+        "name": "Normalize",
+        "params": {
+          "training": true,
+          "mean": [
+            0.485,
+            0.456,
+            0.406
+          ],
+          "std": [
+            0.229,
+            0.224,
+            0.225
+          ],
+          "inplace": false
+        }
+      }
+    ]
+  },
+  "training": {
+    "criterion": "CrossEntropyLoss",
+    "optimizer": "AdamW",
+    "lr": 0.0003,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "epochs_trained": 2,
+    "device": "cpu",
+    "fast_mode": true
+  },
+  "seed": 42,
+  "selection_metric": "best_val_accuracy",
+  "notes": "Pretrained ResNet18, layer4 and fc are trainable.",
+  "results": {
+    "best_val_accuracy": 0.19,
+    "test_loss": 3.8475,
+    "test_accuracy": 0.1533
+  }
+}

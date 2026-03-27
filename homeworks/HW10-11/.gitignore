@@ -1,0 +1,15 @@
+data/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.mat
+
+Thumbs.db
+.DS_Store
+
+artifacts/summary.json
